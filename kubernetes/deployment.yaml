@@ -7,7 +7,7 @@ spec:
     app: literate-spork
   ports:
   - protocol: "TCP"
-    port: 8080
+    port: 80
     targetPort: 5000
   type: LoadBalancer
 
@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: literate-spork
-        image: docker.io/mlphilli/literate-spork:v1.0
+        image: docker.io/mlphilli/literate-spork:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
