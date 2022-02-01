@@ -57,4 +57,16 @@ stages:
   - job:
     displayName: ⎈ Deploy to Kubernetes
     steps:
-      
+      - task: replacetokens@4
+        inputs:
+          targetFiles: '**/deployment.yaml'
+          encoding: 'auto'
+          tokenPattern: 'default'
+          writeBOM: true
+          actionOnMissing: 'warn'
+          keepToken: false
+          actionOnNoFiles: 'continue'
+          enableTransforms: false
+          useLegacyPattern: false
+          enableTelemetry: true
+      - bash: cat kubernetes/deployment.yaml
