@@ -41,3 +41,13 @@ stages:
       inputs:
         codeCoverageTool: Cobertura
         summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
+  - job:
+    displayName: 🐳 Docker Build & Push
+    steps:
+      - task: Docker@2
+        inputs:
+          containerRegistry: 'mlphilli-docker'
+          repository: 'mlphilli/literate-spork'
+          command: 'buildAndPush'
+          Dockerfile: '**/docker'
+          tags: '$(Build.SourceVersion)'
