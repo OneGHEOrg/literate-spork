@@ -80,7 +80,7 @@ stages:
         inputs:
           connectionType: 'Kubernetes Service Connection'
           kubernetesServiceEndpoint: 'nonprod-ish-cluster'
-          namespace: 'organizer'
+          namespace: 'default'
           command: 'apply'
           arguments: '-f kubernetes/deployment.yaml'
           secretType: 'dockerRegistry'
