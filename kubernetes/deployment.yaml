@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: literate-spork
-        image: docker.io/mlphilli/literate-spork:#{version}#
+        image: docker.io/mlphilli/literate-spork:#{Build.SourceVersion}#
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
