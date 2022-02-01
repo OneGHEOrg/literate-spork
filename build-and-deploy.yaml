@@ -79,7 +79,7 @@ stages:
         displayName: 📌 Apply Kubernetes yaml file to cluster
         inputs:
           connectionType: 'Kubernetes Service Connection'
-          kubernetesServiceEndpoint: 'nonprod-liatrio'
+          kubernetesServiceEndpoint: 'nonprod-ish-cluster'
           namespace: 'organizer'
           command: 'apply'
           arguments: '-f kubernetes/deployment.yaml'
