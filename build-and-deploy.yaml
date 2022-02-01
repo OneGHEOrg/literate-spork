@@ -51,5 +51,5 @@ stages:
           repository: 'mlphilli/literate-spork'
           buildContext: 'utensils'
           command: 'buildAndPush'
-          Dockerfile: '../../docker/Dockerfile'
+          Dockerfile: '$(System.DefaultWorkingDirectory)/../../docker/Dockerfile'
           tags: '$(Build.SourceVersion)'
