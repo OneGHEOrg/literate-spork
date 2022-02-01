@@ -92,7 +92,7 @@ stages:
         inputs:
           connectionType: 'Kubernetes Service Connection'
           kubernetesServiceEndpoint: 'nonprod-ish-cluster'
-          namespace: 'organizer'
+          namespace: 'default'
           command: 'rollout'
           arguments: 'status deployment/literate-spork  --timeout=5m'
           secretType: 'dockerRegistry'
