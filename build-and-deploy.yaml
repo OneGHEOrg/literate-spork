@@ -52,3 +52,9 @@ stages:
           command: 'buildAndPush'
           Dockerfile: '**/Dockerfile'
           tags: '$(Build.SourceVersion)'
+- stage: CD
+  jobs: 
+  - job:
+    displayName: ⎈ Deploy to Kubernetes
+    steps:
+      
