@@ -91,7 +91,7 @@ stages:
         displayName: 🔍 Verify Deployment via Rollout Status
         inputs:
           connectionType: 'Kubernetes Service Connection'
-          kubernetesServiceEndpoint: 'nonprod-liatrio'
+          kubernetesServiceEndpoint: 'nonprod-ish-cluster'
           namespace: 'organizer'
           command: 'rollout'
           arguments: 'status deployment/literate-spork  --timeout=5m'
