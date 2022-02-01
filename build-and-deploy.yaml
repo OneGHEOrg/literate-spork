@@ -49,5 +49,5 @@ stages:
           containerRegistry: 'mlphilli-docker'
           repository: 'mlphilli/literate-spork'
           command: 'buildAndPush'
-          Dockerfile: '**/docker'
+          Dockerfile: '**/docker/Dockerfile'
           tags: '$(Build.SourceVersion)'
