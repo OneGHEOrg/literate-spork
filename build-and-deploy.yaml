@@ -33,6 +33,7 @@ stages:
         pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml
       displayName: 'pytest'
     - task: PublishTestResults@2
+      displayName: 
       condition: succeededOrFailed()
       inputs:
         testResultsFiles: '**/test-*.xml'
@@ -57,4 +58,42 @@ stages:
   - job:
     displayName: ⎈ Deploy to Kubernetes
     steps:
-      
+      - task: replacetokens@4
+        displayName: 💉 Inject gitSHA to deployment.yaml
+        inputs:
+          targetFiles: '**/deployment.yaml'
+          encoding: 'auto'
+          tokenPattern: 'default'
+          writeBOM: true
+          actionOnMissing: 'warn'
+          keepToken: false
+          actionOnNoFiles: 'continue'
+          enableTransforms: false
+          useLegacyPattern: false
+          enableTelemetry: true
+      - task: KubectlInstaller@0
+        displayName: ⎈ Kube Tool Installer
+        inputs:
+          kubectlVersion: 'latest'
+      - task: Kubernetes@1
+        displayName: 📌 Apply Kubernetes yaml file to cluster
+        inputs:
+          connectionType: 'Kubernetes Service Connection'
+          kubernetesServiceEndpoint: 'nonprod-ish-cluster'
+          namespace: 'default'
+          command: 'apply'
+          arguments: '-f kubernetes/deployment.yaml'
+          secretType: 'dockerRegistry'
+          containerRegistryType: 'Azure Container Registry'
+          versionSpec: '1.21.7'
+          outputFormat: 'yaml'
+      - task: Kubernetes@1
+        displayName: 🔍 Verify Deployment via Rollout Status
+        inputs:
+          connectionType: 'Kubernetes Service Connection'
+          kubernetesServiceEndpoint: 'nonprod-ish-cluster'
+          namespace: 'default'
+          command: 'rollout'
+          arguments: 'status deployment/literate-spork  --timeout=5m'
+          secretType: 'dockerRegistry'
+          containerRegistryType: 'Azure Container Registry'
