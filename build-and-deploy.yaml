@@ -48,7 +48,7 @@ stages:
       - task: Docker@2
         inputs:
           containerRegistry: 'mlphilli-docker'
-          repository: 'mlphillips44.literate-spork'
+          repository: 'mlphilli/literate-spork'
           command: 'buildAndPush'
           Dockerfile: '**/Dockerfile'
           tags: '$(Build.SourceVersion)'
