@@ -11,25 +11,22 @@ This application will act as a live exercise for gauging technical compentency a
 - [ ] Install Pip
   - MacOs/Linux:  ```python -m pip install --upgrade pip```
   - Windows: ```py -m pip install --upgrade pip```
-- [ ] Install Python Modules
-  - Change working directory to /utensils
-  - ```pip install -r requirements.txt```
+- [ ] Install Python Modules ```pip install -r requirements.txt```
 
 ## Helpful commands to builds and test locally
 ### &nbsp; Unit Testing
 - Utilize pytest plugin for visual studio code or intellij for unit testing &nbsp; or
-- Navigate to project root directory, execute ```pytest``` command from terminal
+- Execute ```pytest``` command from terminal
 
 ### &nbsp; Build
-- Navigate to utensils directory
-- Execute ```docker build -f ../docker/Dockerfile -t mlphilli/spork-fest:latest .```
+- Execute ```docker build -f Dockerfile -t mlphilli/literate-spork:latest .```
 
 ### &nbsp; Run
-- Execute ```docker run mlphilli/literate-spork:latest```
-- Validate endpoint:port are up and accessible
+- Execute ```docker run -p 5001:5000 mlphilli/literate-spork:latest```
+- Validate localhost:5001 is up and serving requests
 
 ### &nbsp; Push
-- Execute ```docker push mlphilli/literate-spork:<tag-name>```
+- Execute ```docker push mlphilli/literate-spork:latest```
 
 ## Running in minikube
 - [ ] Install minikube following the [minikube install guide](https://minikube.sigs.k8s.io/docs/start/)
@@ -42,4 +39,18 @@ This application will act as a live exercise for gauging technical compentency a
 - [ ] Validate app via kubectl commands and/or localhost
 
 ## Build & Deploy via Azure DevOps Pipelines
-TODO: Work on this section
+*[Azure DevOps Pipeline](https://dev.azure.com/mitchellphillips44/AzureStuff/_build?definitionId=1)*
+
+Option 1 - Deploy from Branch
+- [ ] Ensure latest code is checked in and image is set to #{BUILD_SOURCEVERSION}#
+- [ ] From [ADO Pipeline](https://dev.azure.com/mitchellphillips44/AzureStuff/_build?definitionId=1)
+  - Press Run in top right of page
+  - Select Branch to run against
+  - Press Run bottom right of page
+  - Validate pipeline completion and get endpoint in task "Get Service Endpoint
+
+Option 2 - Run via Pull Request to Main
+- [ ] Raise a PR for [literate-spork](https://github.com/mlphillips44/literate-spork) to main
+- [ ] PR build will run tests and build image prior to approval
+- [ ] PR will automatically deploy upon completion/merge of code
+- [ ] Validate pipeline completion and get endpoint in task "Get Service Endpoint"

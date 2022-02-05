@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
  branches:
    include:
@@ -95,5 +90,11 @@ stages:
           namespace: 'default'
           command: 'rollout'
           arguments: 'status deployment/literate-spork  --timeout=5m'
-          secretType: 'dockerRegistry'
-          containerRegistryType: 'Azure Container Registry'
+      - task: Kubernetes@1
+        displayName: 🕸 Get Service Endpoint
+        inputs:
+          connectionType: 'Kubernetes Service Connection'
+          kubernetesServiceEndpoint: 'nonprod-ish-cluster'
+          namespace: 'default'
+          command: 'get'
+          arguments: 'svc literate-spork'
