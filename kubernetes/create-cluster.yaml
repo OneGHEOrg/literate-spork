@@ -12,4 +12,4 @@ steps:
     resourceGroupName: 'liatrio-exercise'
     location: 'Central US'
     templateLocation: 'URL of the file'
-    csmFileLink: 'https://utensildrawer.file.core.windows.net/arm-template/everything-but-kitchen-sink.json'
+    csmFileLink: 'https://utensildrawer.blob.core.windows.net/utensil-drawer/everything-but-kitchen-sink.json'
