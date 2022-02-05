@@ -99,3 +99,5 @@ stages:
           namespace: 'default'
           command: 'get'
           arguments: 'svc literate-spork'
+          versionSpec: '1.21.7'
+          outputFormat: 'yaml'
