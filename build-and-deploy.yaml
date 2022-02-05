@@ -49,6 +49,7 @@ stages:
           Dockerfile: '**/Dockerfile'
           tags: '$(Build.SourceVersion)'
 - stage: CD
+  condition: ne(variables['Build.Reason'], 'PullRequest')
   jobs: 
   - job:
     displayName: ⎈ Deploy to Kubernetes
