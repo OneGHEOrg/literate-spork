@@ -27,7 +27,7 @@ steps:
         --load-balancer-sku Standard \
         --min-count 1 \
         --max-count 2 \
-        --node-count 2 \
+        --node-count 1 \
         --node-osdisk-size 128 \
         --node-osdisk-type Linux \
         --node-vm-size Standard_DS2_v2 \
