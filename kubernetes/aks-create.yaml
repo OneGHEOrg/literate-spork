@@ -2,6 +2,7 @@ parameters:
   - name: clustername
     displayName: Cluster Name
     type: string
+    default: ""
 
 trigger: none
 
@@ -17,15 +18,15 @@ steps:
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
-        az aks create
-        -n `echo $clustername`
-        -g liatrio-exercise
-        --location eastus
-        --load-balancer-sku basic
-        --node-count 2
-        --node-osdisk-size 128
-        --node-osdisk-type Linux
-        --node-vm-size Standard_DS2_v2
-        --no-wait
-        --os-sku Ubuntu
-        --zones 1
+        az aks create \
+        -n `echo $clustername` \
+        -g liatrio-exercise \
+        --location eastus \
+        --load-balancer-sku basic \
+        --node-count 2 \
+        --node-osdisk-size 128 \
+        --node-osdisk-type Linux \
+        --node-vm-size Standard_DS2_v2 \
+        --no-wait \
+        --os-sku Ubuntu \
+        --zones 1 \
