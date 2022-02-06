@@ -21,9 +21,11 @@ steps:
         az aks create \
         -n `echo $clustername` \
         -g liatrio-exercise \
+        --enable-cluster-autoscaler \
         --generate-ssh-keys \
         --location eastus \
         --load-balancer-sku Standard \
+        --min-count 1 \
         --max-count 2 \
         --node-count 2 \
         --node-osdisk-size 128 \
