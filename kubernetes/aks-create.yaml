@@ -21,6 +21,7 @@ steps:
         az aks create \
         -n `echo $clustername` \
         -g liatrio-exercise \
+        --generate-ssh-keys \
         --location eastus \
         --load-balancer-sku basic \
         --node-count 2 \
