@@ -38,6 +38,10 @@ This application will act as a live exercise for gauging technical compentency a
 - [ ] Enable external IP using ```minikube tunnel``` in new terminal
 - [ ] Validate app via kubectl commands and/or localhost
 
+## Cleanup locally
+- [ ] Ctrl+C to stop minikube tunnel
+- [ ] Execute ```minikube stop```
+
 ## Build & Deploy via Azure DevOps Pipelines
 *[Azure DevOps Pipeline](https://dev.azure.com/mitchellphillips44/AzureStuff/_build?definitionId=1)*
 
@@ -47,10 +51,10 @@ Option 1 - Deploy from Branch
   - Press Run in top right of page
   - Select Branch to run against
   - Press Run bottom right of page
-  - Validate pipeline completion and get endpoint in task "Get Service Endpoint
+  - Ensure "Validate App Endpoints" in Validate stage completed and returned responses
 
 Option 2 - Run via Pull Request to Main
 - [ ] Raise a PR for [literate-spork](https://github.com/mlphillips44/literate-spork) to main
 - [ ] PR build will run tests and build image prior to approval
 - [ ] PR will automatically deploy upon completion/merge of code
-- [ ] Validate pipeline completion and get endpoint in task "Get Service Endpoint"
+- [ ] Ensure "Validate App Endpoints" in Validate stage completed and returned responses

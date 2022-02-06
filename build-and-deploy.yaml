@@ -117,7 +117,7 @@ stages:
           curl $(externalip)/datetime && echo ''
           echo '' && echo '' && echo "##[section]Checking default endpoint via curl"
           curl $(externalip)/ && echo ''
-        displayName: 🤝 Validate app endpoints
+        displayName: 🤝 Validate App Endpoints
       - task: Kubernetes@1
         displayName: '🔒 Logout of cluster'
         inputs:
