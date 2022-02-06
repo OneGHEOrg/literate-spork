@@ -10,12 +10,14 @@ pool:
 
 steps:
   - task: AzureCLI@2
+    env:
+      clustername: ${{ parameters.clustername }}
     inputs:
       azureSubscription: 'Free Trial (ae4fc8f2-ba14-4c79-9d31-4a00e65ebf29)'
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: az aks create \
-        -n ${{ parameters.clustername }} \
+        -n `$clustername` \
         -g liatrio-exercise \
         --location eastus \
         --load-balancer-sku basic \
