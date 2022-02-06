@@ -40,7 +40,6 @@ stages:
   - job:
     displayName: 🐳 Docker Build & Push
     steps:
-      - script: ls
       - task: Docker@2
         inputs:
           containerRegistry: 'mlphilli-docker'
@@ -92,12 +91,32 @@ stages:
           command: 'rollout'
           arguments: 'status deployment/literate-spork  --timeout=5m'
       - task: Kubernetes@1
-        displayName: 🕸 Get Service Endpoint
+        displayName: 🔐 Login to cluster
         inputs:
           connectionType: 'Kubernetes Service Connection'
           kubernetesServiceEndpoint: 'nonprod-ish-cluster'
           namespace: 'default'
-          command: 'get'
-          arguments: 'svc literate-spork'
-          versionSpec: '1.21.7'
-          outputFormat: 'yaml'
+          command: 'login'
+      - bash: |
+          sudo apt-get update
+          sudo apt-get install jq
+        displayName: Install JQ
+      - bash: |
+          externalip=`kubectl get svc literate-spork -o json | jq -r .status.loadBalancer.ingress[].ip`
+          echo "##vso[task.setvariable variable=externalip;]$externalip"
+        displayName: 🕸 Get Service Endpoint
+      - bash: |
+          echo 'Checking datetime endpoint via curl'
+          curl $(externalip)/datetime
+          echo 'Checking default endpoint via curl'
+          curl $(externalip)/
+        displayName: 🤝 Validate app endpoints
+      - task: Kubernetes@1
+        displayName: '🔒 Logout of cluster'
+        inputs:
+          kubernetesServiceEndpoint: 'nonprod-ish-cluster'
+          command: logout
+        continueOnError: true
+        condition: succeededOrFailed()
+        
+
