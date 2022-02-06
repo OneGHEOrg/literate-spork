@@ -103,12 +103,13 @@ stages:
         displayName: Install JQ
       - bash: |
           externalip=`kubectl get svc literate-spork -o json | jq -r .status.loadBalancer.ingress[].ip`
+          echo "External Cluster IP is $externalip"
           echo "##vso[task.setvariable variable=externalip;]$externalip"
         displayName: 🕸 Get Service Endpoint
       - bash: |
-          echo 'Checking datetime endpoint via curl'
+          echo '\nChecking datetime endpoint via curl'
           curl $(externalip)/datetime
-          echo 'Checking default endpoint via curl'
+          echo '\nChecking default endpoint via curl'
           curl $(externalip)/
         displayName: 🤝 Validate app endpoints
       - task: Kubernetes@1
