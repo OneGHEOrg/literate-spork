@@ -90,6 +90,12 @@ stages:
           namespace: 'default'
           command: 'rollout'
           arguments: 'status deployment/literate-spork  --timeout=5m'
+- stage: Validate
+  condition: ne(variables['Build.Reason'], 'PullRequest')
+  jobs: 
+  - job:
+    displayName: 🔍 Validate IP and Endpoints
+    steps:
       - task: Kubernetes@1
         displayName: 🔐 Login to cluster
         inputs:
@@ -103,13 +109,13 @@ stages:
         displayName: Install JQ
       - bash: |
           externalip=`kubectl get svc literate-spork -o json | jq -r .status.loadBalancer.ingress[].ip`
-          echo "##[command]External Cluster IP is $externalip"
+          echo "External Cluster IP is ##[debug]$externalip"
           echo "##vso[task.setvariable variable=externalip;]$externalip"
         displayName: 🕸 Get Service Endpoint
       - bash: |
-          echo '$\nChecking datetime endpoint via curl'
+          echo "" && echo 'Checking datetime endpoint via curl'
           curl $(externalip)/datetime
-          echo '$\nChecking default endpoint via curl'
+          echo "" && echo 'Checking default endpoint via curl'
           curl $(externalip)/
         displayName: 🤝 Validate app endpoints
       - task: Kubernetes@1
