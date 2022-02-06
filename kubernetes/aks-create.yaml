@@ -23,7 +23,7 @@ steps:
         -g liatrio-exercise \
         --enable-cluster-autoscaler \
         --generate-ssh-keys \
-        --location eastus \
+        --location westus \
         --load-balancer-sku Standard \
         --min-count 1 \
         --max-count 2 \
