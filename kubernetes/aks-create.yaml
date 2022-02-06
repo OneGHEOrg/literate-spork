@@ -16,15 +16,16 @@ steps:
       azureSubscription: 'Free Trial (ae4fc8f2-ba14-4c79-9d31-4a00e65ebf29)'
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
-      inlineScript: az aks create \
-        -n $clustername \
-        -g liatrio-exercise \
-        --location eastus \
-        --load-balancer-sku basic \
-        --node-count 2 \
-        --node-osdisk-size 128 \
-        --node-osdisk-type Linux \
-        --node-vm-size Standard_DS2_v2 \
-        --no-wait \
-        --os-sku Ubuntu \
+      inlineScript: |
+        az aks create
+        -n `echo $clustername`
+        -g liatrio-exercise
+        --location eastus
+        --load-balancer-sku basic
+        --node-count 2
+        --node-osdisk-size 128
+        --node-osdisk-type Linux
+        --node-vm-size Standard_DS2_v2
+        --no-wait
+        --os-sku Ubuntu
         --zones 1
