@@ -2,7 +2,6 @@ parameters:
   - name: clustername
     displayName: Cluster Name
     type: string
-  - name: 
 
 trigger: none
 
