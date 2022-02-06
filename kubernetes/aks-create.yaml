@@ -24,6 +24,7 @@ steps:
         --generate-ssh-keys \
         --location eastus \
         --load-balancer-sku Standard \
+        --max-count 2 \
         --node-count 2 \
         --node-osdisk-size 128 \
         --node-osdisk-type Linux \
