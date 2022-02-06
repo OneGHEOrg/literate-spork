@@ -23,7 +23,7 @@ steps:
         -g liatrio-exercise \
         --generate-ssh-keys \
         --location eastus \
-        --load-balancer-sku basic \
+        --load-balancer-sku Standard \
         --node-count 2 \
         --node-osdisk-size 128 \
         --node-osdisk-type Linux \
