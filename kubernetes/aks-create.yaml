@@ -1,0 +1,36 @@
+parameters:
+  - name: clustername
+    displayName: Cluster Name
+    type: string
+    default: ""
+
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: AzureCLI@2
+    env:
+      clustername: ${{ parameters.clustername }}
+    inputs:
+      azureSubscription: 'Free Trial (ae4fc8f2-ba14-4c79-9d31-4a00e65ebf29)'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        az aks create \
+        -n `echo $clustername` \
+        -g liatrio-exercise \
+        --enable-cluster-autoscaler \
+        --generate-ssh-keys \
+        --location eastus \
+        --load-balancer-sku Standard \
+        --min-count 1 \
+        --max-count 2 \
+        --node-count 1 \
+        --node-osdisk-size 128 \
+        --node-osdisk-type Linux \
+        --node-vm-size Standard_DS2_v2 \
+        --no-wait \
+        --os-sku Ubuntu \
+        --zones 1 \

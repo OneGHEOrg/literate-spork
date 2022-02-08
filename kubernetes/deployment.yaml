@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: literate-spork
+spec:
+  selector:
+    app: literate-spork
+  ports:
+  - protocol: "TCP"
+    port: 80
+    targetPort: 5000
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: literate-spork
+  labels:
+    app: literate-spork
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: literate-spork
+  template:
+    metadata:
+      labels:
+        app: literate-spork
+    spec:
+      containers:
+      - name: literate-spork
+        image: docker.io/mlphilli/literate-spork:#{BUILD_SOURCEVERSION}#
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000

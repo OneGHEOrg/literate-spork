@@ -1,0 +1,129 @@
+trigger:
+ branches:
+   include:
+     - main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: CI
+  jobs:
+  - job:
+    displayName: 👩‍🔬 Test
+    steps: 
+    - task: UsePythonVersion@0
+      displayName: Set Python Version to PATH
+      inputs:
+        versionSpec: '3.10.x'
+        addToPath: true
+        architecture: 'x64'
+    - script: python -m pip install --upgrade pip
+      displayName: Install Tools
+    - script: pip install -r requirements.txt
+      displayName: 'Install pip requirements'
+    - script: |
+        pip install pytest pytest-azurepipelines
+        pip install pytest-cov
+        pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml
+      displayName: 'pytest'
+    - task: PublishTestResults@2
+      displayName: 
+      condition: succeededOrFailed()
+      inputs:
+        testResultsFiles: '**/test-*.xml'
+        testRunTitle: 'Publish test results for $(Build.Repository.Name)'
+    - task: PublishCodeCoverageResults@1
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
+  - job:
+    displayName: 🐳 Docker Build & Push
+    steps:
+      - task: Docker@2
+        inputs:
+          containerRegistry: 'mlphilli-docker'
+          repository: 'mlphilli/literate-spork'
+          command: 'buildAndPush'
+          Dockerfile: '**/Dockerfile'
+          tags: '$(Build.SourceVersion)'
+- stage: CD
+  condition: ne(variables['Build.Reason'], 'PullRequest')
+  jobs: 
+  - job:
+    displayName: ⎈ Deploy to Kubernetes
+    steps:
+      - task: replacetokens@4
+        displayName: 💉 Inject gitSHA to deployment.yaml
+        inputs:
+          targetFiles: '**/deployment.yaml'
+          encoding: 'auto'
+          tokenPattern: 'default'
+          writeBOM: true
+          actionOnMissing: 'warn'
+          keepToken: false
+          actionOnNoFiles: 'continue'
+          enableTransforms: false
+          useLegacyPattern: false
+          enableTelemetry: true
+      - task: KubectlInstaller@0
+        displayName: ⎈ Kube Tool Installer
+        inputs:
+          kubectlVersion: 'latest'
+      - task: Kubernetes@1
+        displayName: 📌 Apply Kubernetes yaml file to cluster
+        inputs:
+          connectionType: 'Kubernetes Service Connection'
+          kubernetesServiceEndpoint: 'nonprod-ish-cluster'
+          namespace: 'default'
+          command: 'apply'
+          arguments: '-f kubernetes/deployment.yaml'
+          secretType: 'dockerRegistry'
+          containerRegistryType: 'Azure Container Registry'
+          versionSpec: '1.21.7'
+          outputFormat: 'yaml'
+      - task: Kubernetes@1
+        displayName: 🔍 Verify Deployment via Rollout Status
+        inputs:
+          connectionType: 'Kubernetes Service Connection'
+          kubernetesServiceEndpoint: 'nonprod-ish-cluster'
+          namespace: 'default'
+          command: 'rollout'
+          arguments: 'status deployment/literate-spork  --timeout=5m'
+- stage: Validate
+  condition: ne(variables['Build.Reason'], 'PullRequest')
+  jobs: 
+  - job:
+    displayName: 🔍 Validate IP and Endpoints
+    steps:
+      - task: Kubernetes@1
+        displayName: 🔐 Login to cluster
+        inputs:
+          connectionType: 'Kubernetes Service Connection'
+          kubernetesServiceEndpoint: 'nonprod-ish-cluster'
+          namespace: 'default'
+          command: 'login'
+      - bash: |
+          sudo apt-get update
+          sudo apt-get install jq
+        displayName: Install JQ
+      - bash: |
+          externalip=`kubectl get svc literate-spork -o json | jq -r .status.loadBalancer.ingress[].ip`
+          echo '' && echo "##[command]External Cluster IP is $externalip" && echo ''
+          echo "##vso[task.setvariable variable=externalip;]$externalip"
+        displayName: 🕸 Get Service Endpoint
+      - bash: |
+          echo '' && echo '' && echo "##[section]Checking datetime endpoint via curl"
+          curl $(externalip)/datetime && echo ''
+          echo '' && echo '' && echo "##[section]Checking default endpoint via curl"
+          curl $(externalip)/ && echo ''
+        displayName: 🤝 Validate App Endpoints
+      - task: Kubernetes@1
+        displayName: '🔒 Logout of cluster'
+        inputs:
+          kubernetesServiceEndpoint: 'nonprod-ish-cluster'
+          command: logout
+        continueOnError: true
+        condition: succeededOrFailed()
+        
+
