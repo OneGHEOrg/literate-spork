@@ -12,6 +12,9 @@ This application will act as a live exercise for gauging technical compentency a
   - MacOs/Linux:  ```python -m pip install --upgrade pip```
   - Windows: ```py -m pip install --upgrade pip```
 - [ ] Install Python Modules ```pip install -r requirements.txt```
+- [ ] Install Docker
+  - MacOs: ```brew install docker```
+  - Windows: ```choco install docker-desktop```
 
 ## Helpful commands to builds and test locally
 ### &nbsp; Unit Testing
