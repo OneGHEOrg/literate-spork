@@ -1,0 +1,26 @@
+name: Unit Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: 👩‍🔬 Test
+    runs-on: ['self-hosted', 'liatrio']
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: pytest
+        run: pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml
