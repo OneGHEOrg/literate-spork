@@ -25,7 +25,7 @@ jobs:
     name: Analyze
     runs-on:
       - self-hosted
-      - liatrio
+      - kubernetes
     permissions:
       actions: read
       contents: read
