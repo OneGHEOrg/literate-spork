@@ -23,9 +23,7 @@ on:
 jobs:
   analyze:
     name: Analyze
-    runs-on:
-      - self-hosted
-      - kubernetes
+    runs-on: [self-hosted, kubernetes]
     permissions:
       actions: read
       contents: read
