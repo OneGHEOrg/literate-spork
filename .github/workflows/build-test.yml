@@ -24,27 +24,6 @@ jobs:
 
       - name: pytest
         run: pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
-        if: always()
-        with:
-          junit_files: "test-results/**/*.xml"
-
-      - name: Copy Coverage To Predictable Location
-        run: cp coverage/*/coverage.cobertura.xml coverage/coverage.cobertura.xml
-      - name: Code Coverage Summary Report
-        uses: irongut/CodeCoverageSummary@v1.0.2
-        with:
-          filename: coverage/coverage.cobertura.xml
-          badge: true
-          format: 'markdown'
-          output: 'both'
-      - name: Add Coverage PR Comment
-        uses: marocchino/sticky-pull-request-comment@v2
-        if: github.event_name == 'pull_request'
-        with:
-          recreate: true
-          path: code-coverage-results.md
 
   docker:
     name: 🐳 Docker Build & Push

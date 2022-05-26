@@ -4,5 +4,25 @@
         "tests"
     ],
     "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+    "python.testing.pytestEnabled": true,
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#fe5cbd",
+        "activityBar.activeBorder": "#98fd02",
+        "activityBar.background": "#fe5cbd",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#98fd02",
+        "activityBarBadge.foreground": "#15202b",
+        "sash.hoverBorder": "#fe5cbd",
+        "statusBar.background": "#fe29a8",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#fe5cbd",
+        "statusBarItem.remoteBackground": "#fe29a8",
+        "statusBarItem.remoteForeground": "#e7e7e7",
+        "titleBar.activeBackground": "#fe29a8",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#fe29a899",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "peacock.color": "#fe29a8"
 }
