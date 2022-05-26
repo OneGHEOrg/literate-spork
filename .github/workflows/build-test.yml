@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - main
-      - github-actions
   pull_request:
     branches:
       - main
-      - github-actions
 
 jobs:
   test:
@@ -50,7 +48,7 @@ jobs:
 
   docker:
     name: 🐳 Docker Build & Push
-    needs: build
+    needs: test
     runs-on: ['self-hosted', 'liatrio']
     steps:
       - name: Set up QEMU
