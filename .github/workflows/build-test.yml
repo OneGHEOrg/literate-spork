@@ -14,7 +14,6 @@ jobs:
     runs-on: ['self-hosted', 'liatrio']
     steps:
       - uses: actions/checkout@v3
-      - uses: docker-practice/actions-setup-docker@master      
       - name: Setup Python
         uses: actions/setup-python@v3
         with:
@@ -25,12 +24,6 @@ jobs:
 
       - name: pytest
         run: pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml
-
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
-        if: always()
-        with:
-          junit_files: "test-results/**/*.xml"
 
   docker:
     name: 🐳 Docker Build & Push
