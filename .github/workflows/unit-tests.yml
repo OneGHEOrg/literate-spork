@@ -32,4 +32,4 @@ jobs:
           password: ${{ secrets.docker_secret }}
           image: mlphilli/literate-spork
           cache: true
-          cache-registry: mlphilli/cache
+          cache_registry: mlphilli/cache
