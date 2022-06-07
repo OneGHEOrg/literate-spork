@@ -28,6 +28,7 @@ jobs:
       - name: Kaniko builder
         uses: aevea/action-kaniko@v0.9.0
         with:
-          registry: mlphilli-docker
+          username: mlphilli
+          password: ${{ secrets.docker_secret }}
           image: mlphilli/literate-spork
           tag: latest
