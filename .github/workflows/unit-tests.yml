@@ -33,3 +33,4 @@ jobs:
           image: mlphilli/literate-spork
           cache: true
           cache_registry: mlphilli/cache
+          debug: true
