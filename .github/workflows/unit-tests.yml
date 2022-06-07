@@ -24,3 +24,9 @@ jobs:
 
       - name: pytest
         run: pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml
+      
+      - name: Kaniko builder
+        uses: aevea/action-kaniko@v0.9.0
+        with:
+          image: mlphilli/literate-spork
+          tag: latest
