@@ -31,4 +31,3 @@ jobs:
           username: mlphilli
           password: ${{ secrets.docker_secret }}
           image: mlphilli/literate-spork
-          tag: latest
