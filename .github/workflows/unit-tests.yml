@@ -12,11 +12,6 @@ jobs:
   test:
     name: 👩‍🔬 Test
     runs-on: ['self-hosted', 'kubernetes']
-    services:
-      registry:
-        image: registry:2
-        ports:
-          - 2376:5000
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
