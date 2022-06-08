@@ -24,15 +24,35 @@ jobs:
 
       - name: pytest
         run: pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml
-      
-      - name: Kaniko builder
-        uses: aevea/action-kaniko@v0.9.0
+        
+      - uses: docker/metadata-action@v3
+        id: metadata
         with:
+          images: docker.io/mlphilli/literate-spork
+        
+      - uses: docker/login-action@v1
+        with:
+          registry: docker.io
           username: mlphilli
           password: ${{ secrets.docker_secret }}
-          image: mlphilli/literate-spork
+        
+      - name: kaniko-action
+        uses: int128/kaniko-action@v1
+        with:
+          push: true
+          tags: latest
           cache: true
-          cache_registry: mlphilli/cache
-          debug: true
-          skip_unchanged_digest: true
-          extra_args: "--skip-tls-verify"
+          cache-repository: docker.io/mlphilli/cache
+          
+      
+#       - name: Kaniko builder
+#         uses: aevea/action-kaniko@v0.9.0
+#         with:
+#           username: mlphilli
+#           password: ${{ secrets.docker_secret }}
+#           image: mlphilli/literate-spork
+#           cache: true
+#           cache_registry: mlphilli/cache
+#           debug: true
+#           skip_unchanged_digest: true
+#           extra_args: "--skip-tls-verify"
