@@ -41,9 +41,9 @@ jobs:
         with:
           push: false
           kaniko-args: "--tarPath=image.tar"
-          tags: mitchell
-          cache: true
-          cache-repository: docker.io/mlphilli/cache
+          #tags: mitchell
+          #cache: true
+          #cache-repository: docker.io/mlphilli/cache
           
       
 #       - name: Kaniko builder
