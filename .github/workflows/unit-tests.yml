@@ -39,8 +39,9 @@ jobs:
       - name: kaniko-action
         uses: int128/kaniko-action@v1
         with:
-          push: true
-          tags: latest
+          push: false
+          kaniko-args: "--tarPath=image.tar"
+          tags: mitchell
           cache: true
           cache-repository: docker.io/mlphilli/cache
           
