@@ -34,3 +34,4 @@ jobs:
           cache: true
           cache_registry: mlphilli/cache
           debug: true
+          skip_unchanged_digest: true
