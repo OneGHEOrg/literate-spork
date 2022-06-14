@@ -11,7 +11,7 @@ on:
 jobs:
   test:
     name: 👩‍🔬 Test
-    runs-on: ['self-hosted', 'kubernetes']
+    runs-on: ['self-hosted', 'kubernetes', 'eks']
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
