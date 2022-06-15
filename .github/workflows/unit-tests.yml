@@ -35,8 +35,7 @@ jobs:
 #           debug: true
 #           extra_args: "--image-fs-extract-retry 5"
 
-      - run: |
-          sudo apt-get update && sudo apt-get -y install buildah
+      - run: sudo apt-get -y update && sudo apt-get -y install buildah
 
       - name: Buildah Build
         uses: redhat-actions/buildah-build@v2.10
