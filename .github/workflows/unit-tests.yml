@@ -40,7 +40,7 @@ jobs:
       - name: Buildah Build
         uses: redhat-actions/buildah-build@v2.10
         with:
-          base-image: docker.io/python
+          containerfiles: ./Dockerfile
           image: literate-spork
           tls-verify: false
           
