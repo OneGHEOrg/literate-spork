@@ -25,24 +25,15 @@ jobs:
       - name: pytest
         run: pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml          
       
-#       - name: Kaniko builder
-#         uses: aevea/action-kaniko@v0.9.0
-#         with:
-#           username: mlphilli
-#           password: ${{ secrets.docker_secret }}
-#           image: mlphilli/kaniko3
-#           cache_registry: mlphilli/cache
-#           debug: true
-#           extra_args: "--image-fs-extract-retry 5"
-
-      - run: sudo apt-get -y update && sudo apt-get -y install buildah
-
-      - name: Buildah Build
-        uses: redhat-actions/buildah-build@v2.10
+      - name: Kaniko builder
+        uses: aevea/action-kaniko@v0.9.0
         with:
-          containerfiles: ./Dockerfile
-          image: literate-spork
-          tls-verify: false
+          username: mlphilli
+          password: ${{ secrets.docker_secret }}
+          image: mlphilli/kaniko-spork
+          cache_registry: mlphilli/cache
+          debug: true
+          extra_args: "--image-fs-extract-retry 5"
           
           
 
