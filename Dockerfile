@@ -4,6 +4,7 @@ WORKDIR /utensils
 
 COPY ./requirements.txt ./
 RUN pip install -r requirements.txt
+RUN echo "hello world"
 
 COPY ./utensils .
 
