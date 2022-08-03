@@ -11,7 +11,7 @@ on:
 jobs:
   test:
     name: 👩‍🔬 Test
-    runs-on: ['self-hosted', 'liatrio', 'ec2']
+    runs-on: ['self-hosted', 'azure', 'vmss']
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
