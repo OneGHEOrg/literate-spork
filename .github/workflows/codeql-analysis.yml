@@ -1,4 +1,4 @@
-# For most projects, this workflow file will not need changing; you simply need
+v# For most projects, this workflow file will not need changing; you simply need
 # to commit it to your repository.
 #
 # You may wish to alter this file to override the set of languages analyzed,
@@ -26,7 +26,7 @@ jobs:
     runs-on:
       - self-hosted
       - azure
-      - vmss
+      - vm
     permissions:
       actions: read
       contents: read
